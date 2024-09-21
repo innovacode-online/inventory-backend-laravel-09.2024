@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Sale\SaleController;
 use Illuminate\Support\Facades\Route;
 use Orion\Facades\Orion;
 
@@ -15,3 +16,6 @@ Route::apiResource("categories", CategoryController::class);
 
 
 Orion::resource('products', ProductController::class);
+
+Route::apiResource("sales", SaleController::class)
+    ->only(["index", "store", "show"]);
