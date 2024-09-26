@@ -21,7 +21,7 @@ return new class extends Migration
             $table->double("price");
             $table->string("image")->nullable();
 
-            $table->boolean("status");
+            $table->boolean("status")->default(true);
 
             $table->foreignId("category_id")
                 ->constrained()
