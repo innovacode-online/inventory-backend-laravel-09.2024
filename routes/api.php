@@ -15,16 +15,21 @@ use Orion\Facades\Orion;
 
 Route::post("/auth/login", [AuthController::class, "login"]);
 
+Orion::resource('products', ProductController::class)
+    ->only(["index", "show"]);
 
-Route::middleware(["auth:sanctum"])->group(function () {
-
+Route::middleware(["auth:sanctum", "role.admin"])->group(function () {
+    
+    Route::get("/auth/logout", [AuthController::class, "logout"]);
+    Route::get("/auth/validate-token", [AuthController::class, "validateToken"]);
+    
     
     Route::apiResource("categories", CategoryController::class);
     
-    Orion::resource('products', ProductController::class);
+    Orion::resource('products', ProductController::class)
+        ->only(["store", "destroy", "update"]);
     
     Route::apiResource("sales", SaleController::class)
-    ->only(["index", "store", "show"]);
-
+        ->only(["index", "store", "show"]);
 
 });

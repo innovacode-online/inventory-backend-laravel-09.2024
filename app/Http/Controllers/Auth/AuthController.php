@@ -39,6 +39,16 @@ class AuthController extends Controller
 
     public function logout( Request $request )
     {
+
+        $user = $request->user();
+
+        $user->currentAccessToken()->delete();
+
+        return response()->json([
+            "message" => "Sesion cerrada",
+        ]);
+
+
         
     }
 
@@ -47,9 +57,14 @@ class AuthController extends Controller
 
     }
 
-    public function checkToken( Request $request )
+    public function validateToken( Request $request )
     {
-        
+        $user = $request->user();
+
+        return response()->json([
+            "user" => $user
+        ]);
+
     }
 
 
