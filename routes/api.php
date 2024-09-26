@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Sale\SaleController;
@@ -12,10 +13,18 @@ use Orion\Facades\Orion;
 // Route::put("/categories/{id}", [CategoryController::class, 'update']);
 // Route::delete("/categories/{id}", [CategoryController::class, 'destroy']);
 
-Route::apiResource("categories", CategoryController::class);
+Route::post("/auth/login", [AuthController::class, "login"]);
 
 
-Orion::resource('products', ProductController::class);
+Route::middleware(["auth:sanctum"])->group(function () {
 
-Route::apiResource("sales", SaleController::class)
+    
+    Route::apiResource("categories", CategoryController::class);
+    
+    Orion::resource('products', ProductController::class);
+    
+    Route::apiResource("sales", SaleController::class)
     ->only(["index", "store", "show"]);
+
+
+});
